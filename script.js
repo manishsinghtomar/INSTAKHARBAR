@@ -1,5 +1,5 @@
-const API_KEY = "2fd67d752650421790c4be5eaf02c7e4";
-const url = "https://newsapi.org/v2/everything?q=";
+const API_KEY = "00d371503ccfe10e6211d4705d8f2a44";
+const url = "https://gnews.io/api/v4/search?q=";
 
 window.addEventListener("load",() => fetchNews("india"));
 
@@ -8,14 +8,14 @@ function reload(){
 }
 
 // async function fetchNews(query) {
-//     const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);//async operation
+//     const res = await fetch(`${url}${query}&lang=en&country=in&apikey=${API_KEY}`);//async operation
 //     const data = await res.json(); //it also return promise thats why we are using await & json() is used to convert the data into json format
 //     console.log(data);
 // }
 
 
 async function fetchNews(query){
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+    const res = await fetch(`${url}${query}&lang=en&country=in&apikey=${API_KEY}`);
     const data = await res.json();
     bindData(data.articles);
 }
@@ -27,7 +27,7 @@ function bindData(articles){
     cardsContainer.innerHTML = "";
 
     articles.forEach((article) => {
-        if (!article.urlToImage) return;
+        if (!article.image) return;
         const cardClone = newsCardTemplate.content.cloneNode(true);
         fillDataInCard(cardClone, article);
         cardsContainer.appendChild(cardClone);
@@ -40,7 +40,7 @@ function fillDataInCard(cardClone, article) {
     const newsSource = cardClone.querySelector('#news-source');
     const newsDesc = cardClone.querySelector('#news-desc');
 
-    newsImg.src = article.urlToImage;
+    newsImg.src = article.image;
     newsTitle.innerHTML = article.title;
     newsDesc.innerHTML = article.description;
 
